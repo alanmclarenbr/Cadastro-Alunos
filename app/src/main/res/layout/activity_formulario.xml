@@ -14,27 +14,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:hint="Nome"/>
+            android:hint="Nome"
+            android:id="@+id/formulario_nome"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:hint="Site"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress"
+            android:id="@+id/formulario_site"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:hint="Endereço"/>
+            android:hint="Endereço"
+            android:id="@+id/formulario_endereco"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:hint="Telefone"
-            android:inputType="phone"/>
+            android:inputType="phone"
+            android:id="@+id/formulario_telefone"/>
 
         <RatingBar
             android:layout_width="wrap_content"
@@ -42,13 +46,15 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:numStars="5"
-            android:max="10"/>
+            android:max="10"
+            android:id="@+id/formulario_nota"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Inserir"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:id="@+id/btnInserir"/>
 
     </LinearLayout>
 </ScrollView>

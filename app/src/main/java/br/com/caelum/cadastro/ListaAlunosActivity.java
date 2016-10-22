@@ -1,11 +1,15 @@
 package br.com.caelum.cadastro;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -54,6 +58,16 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        Button botaoAdiciona = (Button) findViewById(R.id.lista_alunos_floating_button);
+        botaoAdiciona.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListaAlunosActivity.this, FormularioActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
