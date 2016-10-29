@@ -1,9 +1,13 @@
 package br.com.caelum.cadastro.modelo;
 
+import java.io.Serializable;
+
 /**
- * Created by android6196 on 22/10/16.
+ * Class Created by android6196 on 22/10/16.
  */
-public class Aluno {
+public class Aluno implements Serializable{
+
+    private static final long serialVersionUID = -3433857247122086996L;
     private String nome;
     private String telefone;
     private String endereco;
@@ -57,5 +61,25 @@ public class Aluno {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof Aluno) {
+            if (((Aluno) o).getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return getId() + " - " + getNome();
     }
 }

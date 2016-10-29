@@ -1,5 +1,6 @@
 package br.com.caelum.cadastro;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,20 +16,18 @@ import br.com.caelum.cadastro.modelo.Aluno;
 public class FormularioActivity extends AppCompatActivity {
 
     private FormularioHelper helper;
+    private static final String ALUNO_SELECIONADO = "alunoSelecionado";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
         helper = new FormularioHelper(this);
-        Button inserir = (Button) findViewById(R.id.btnInserir);
-        inserir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(FormularioActivity.this, "Voce clicou no botao!", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
+        Aluno aluno = (Aluno) getIntent().getSerializableExtra(ALUNO_SELECIONADO);
+        if(aluno!=null){
+            helper.colocaNoFormulario(aluno);
+        }
+
     }
 
     @Override
@@ -43,11 +42,13 @@ public class FormularioActivity extends AppCompatActivity {
             case R.id.menu_formulario_ok:
                 Aluno aluno = helper.pegaAlunoDoFormulario();
                 AlunoDao alunoDao = new AlunoDao(this);
-                if(helper.temNome()){
+
+                if(aluno.getId()==null){
                     alunoDao.insert(aluno);
                 }else{
-                    helper.mostraErro();
+                    alunoDao.update(aluno);
                 }
+                alunoDao.close();
                 finish();
                 return false;
             default:

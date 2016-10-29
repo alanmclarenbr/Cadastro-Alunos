@@ -23,7 +23,7 @@ public class FormularioHelper {
         nome = (EditText) activity.findViewById(R.id.formulario_nome);
         endereco = (EditText) activity.findViewById(R.id.formulario_endereco);
         telefone = (EditText) activity.findViewById(R.id.formulario_telefone);
-        site = (EditText) activity.findViewById(R.id.formulario_nome);
+        site = (EditText) activity.findViewById(R.id.formulario_site);
         nota = (RatingBar) activity.findViewById(R.id.formulario_nota);
         aluno = new Aluno();
 
@@ -33,7 +33,7 @@ public class FormularioHelper {
         aluno.setNome(nome.getText().toString());
         aluno.setEndereco(endereco.getText().toString());
         aluno.setSite(site.getText().toString());
-        aluno.setTelefone(site.getText().toString());
+        aluno.setTelefone(telefone.getText().toString());
         aluno.setNota(Double.valueOf(nota.getProgress()));
 
         return aluno;
@@ -45,5 +45,14 @@ public class FormularioHelper {
 
     public void mostraErro(){
         nome.setError("Campo nome náo pode ser vazio!");
+    }
+
+    public void colocaNoFormulario(Aluno aluno){
+        nome.setText(aluno.getNome());
+        telefone.setText(aluno.getTelefone());
+        site.setText(aluno.getSite());
+        nota.setProgress(aluno.getNota().intValue());
+        endereco.setText(aluno.getEndereco());
+        this.aluno = aluno;
     }
 }

@@ -2,8 +2,13 @@ package br.com.caelum.cadastro.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.caelum.cadastro.modelo.Aluno;
 
@@ -38,12 +43,60 @@ public class AlunoDao extends SQLiteOpenHelper {
     }
 
     public void insert(Aluno aluno){
+        ContentValues values = preencherContentValues(aluno);
+
+        getWritableDatabase().insert(TABELA, null, values);
+    }
+
+    @NonNull
+    private ContentValues preencherContentValues(Aluno aluno) {
         ContentValues values = new ContentValues();
         values.put("nome", aluno.getNome());
         values.put("endereco", aluno.getEndereco());
+        values.put("telefone", aluno.getTelefone());
         values.put("site", aluno.getSite());
         values.put("nota", aluno.getNota());
+        return values;
+    }
 
-        getWritableDatabase().insert(TABELA, null, values);
+    public List<Aluno> getAll(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = null;
+        try {
+             cursor = db.rawQuery("SELECT * FROM " + TABELA + ";", null);
+
+            ArrayList<Aluno> alunos = new ArrayList<>();
+
+            while (cursor.moveToNext()){
+                Aluno aluno = new Aluno();
+
+                aluno.setId(cursor.getLong(cursor.getColumnIndex("id")));
+                aluno.setNome(cursor.getString(cursor.getColumnIndex("nome")));
+                aluno.setTelefone(cursor.getString(cursor.getColumnIndex("telefone")));
+                aluno.setEndereco(cursor.getString(cursor.getColumnIndex("endereco")));
+                aluno.setSite(cursor.getString(cursor.getColumnIndex("site")));
+                aluno.setNota(cursor.getDouble(cursor.getColumnIndex("nota")));
+
+                alunos.add(aluno);
+            }
+
+            return alunos;
+        } finally {
+            cursor.close();
+        }
+    }
+
+    public void delete(Aluno aluno){
+        SQLiteDatabase db = getWritableDatabase();
+        String[] args = {aluno.getId().toString()};
+
+        db.delete(TABELA, "id=?", args);
+    }
+
+    public void update(Aluno aluno){
+        ContentValues values = preencherContentValues(aluno);
+
+        String[] args = {aluno.getId().toString()};
+        getWritableDatabase().update(TABELA, values, "id=?", args);
     }
 }
