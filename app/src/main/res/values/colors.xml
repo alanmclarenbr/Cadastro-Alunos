@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorYellowStars">#ffe30e</color>
+    <color name="linha_par">#97CBE2</color>
+    <color name="linha_impar">#76BDDD</color>
 </resources>

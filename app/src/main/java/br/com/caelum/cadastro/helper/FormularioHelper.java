@@ -1,7 +1,12 @@
 package br.com.caelum.cadastro.helper;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.media.Rating;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 
 import br.com.caelum.cadastro.FormularioActivity;
@@ -18,6 +23,8 @@ public class FormularioHelper {
     private EditText site;
     private RatingBar nota;
     private Aluno aluno;
+    private ImageView foto;
+    private Button fotoButton;
 
     public FormularioHelper(FormularioActivity activity) {
         nome = (EditText) activity.findViewById(R.id.formulario_nome);
@@ -25,6 +32,8 @@ public class FormularioHelper {
         telefone = (EditText) activity.findViewById(R.id.formulario_telefone);
         site = (EditText) activity.findViewById(R.id.formulario_site);
         nota = (RatingBar) activity.findViewById(R.id.formulario_nota);
+        foto = (ImageView) activity.findViewById(R.id.formulario_foto);
+        fotoButton = (Button) activity.findViewById(R.id.formulario_foto_button);
         aluno = new Aluno();
 
     }
@@ -35,6 +44,7 @@ public class FormularioHelper {
         aluno.setSite(site.getText().toString());
         aluno.setTelefone(telefone.getText().toString());
         aluno.setNota(Double.valueOf(nota.getProgress()));
+        aluno.setCaminhoFoto((String)foto.getTag());
 
         return aluno;
     }
@@ -53,6 +63,22 @@ public class FormularioHelper {
         site.setText(aluno.getSite());
         nota.setProgress(aluno.getNota().intValue());
         endereco.setText(aluno.getEndereco());
+        if(aluno.getCaminhoFoto()!=null){
+            carregaImagem(aluno.getCaminhoFoto());
+        }
         this.aluno = aluno;
+    }
+
+    public Button getFotoButton(){
+        return fotoButton;
+    }
+
+    public void carregaImagem(String localArquivoFoto){
+        Bitmap imagemFoto = BitmapFactory.decodeFile(localArquivoFoto);
+        Bitmap imagemReduzida = Bitmap.createScaledBitmap(imagemFoto, imagemFoto.getWidth(), 300, true);
+        foto.setImageBitmap(imagemReduzida);
+        imagemFoto.recycle();
+        foto.setTag(localArquivoFoto);
+        foto.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 }

@@ -17,7 +17,7 @@ import br.com.caelum.cadastro.modelo.Aluno;
  */
 public class AlunoDao extends SQLiteOpenHelper {
 
-    private static final int VERSAO = 1;
+    private static final int VERSAO = 2;
     private static final String TABELA = "Alunos";
     public static final String SQL_DROP_TABLE_ALUNO = "DROP TABLE IF EXISTS " + TABELA;
     private static final String DATABASE = "CadastroCaelum";
@@ -38,8 +38,8 @@ public class AlunoDao extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(SQL_DROP_TABLE_ALUNO);
-        onCreate(db);
+        //db.execSQL(SQL_DROP_TABLE_ALUNO);
+        db.execSQL("ALTER TABLE " + TABELA + " ADD COLUMN caminhoFoto TEXT;");
     }
 
     public void insert(Aluno aluno){
@@ -56,6 +56,7 @@ public class AlunoDao extends SQLiteOpenHelper {
         values.put("telefone", aluno.getTelefone());
         values.put("site", aluno.getSite());
         values.put("nota", aluno.getNota());
+        values.put("caminhoFoto", aluno.getCaminhoFoto());
         return values;
     }
 
@@ -76,6 +77,7 @@ public class AlunoDao extends SQLiteOpenHelper {
                 aluno.setEndereco(cursor.getString(cursor.getColumnIndex("endereco")));
                 aluno.setSite(cursor.getString(cursor.getColumnIndex("site")));
                 aluno.setNota(cursor.getDouble(cursor.getColumnIndex("nota")));
+                aluno.setCaminhoFoto(cursor.getString(cursor.getColumnIndex("caminhoFoto")));
 
                 alunos.add(aluno);
             }
@@ -98,5 +100,16 @@ public class AlunoDao extends SQLiteOpenHelper {
 
         String[] args = {aluno.getId().toString()};
         getWritableDatabase().update(TABELA, values, "id=?", args);
+    }
+
+    public boolean isAluno(String telefone){
+        String[] parametros = {telefone};
+
+        Cursor rawQuery = getReadableDatabase().rawQuery("SELECT TELEFONE FROM " + TABELA +
+            "WHERE TELEFONE = ?", parametros);
+        int total = rawQuery.getCount();
+        rawQuery.close();
+
+        return total > 0;
     }
 }
