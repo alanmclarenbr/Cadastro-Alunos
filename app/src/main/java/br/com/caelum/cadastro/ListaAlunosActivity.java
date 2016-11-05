@@ -22,6 +22,7 @@ import java.util.List;
 import br.com.caelum.cadastro.adapter.ListaAlunosAdapter;
 import br.com.caelum.cadastro.dao.AlunoDao;
 import br.com.caelum.cadastro.modelo.Aluno;
+import br.com.caelum.cadastro.modelo.Permissao;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
@@ -39,6 +40,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
+
+        Permissao.fazPermissao(this);
 
         AlunoDao dao = new AlunoDao(this);
 

@@ -106,7 +106,7 @@ public class AlunoDao extends SQLiteOpenHelper {
         String[] parametros = {telefone};
 
         Cursor rawQuery = getReadableDatabase().rawQuery("SELECT TELEFONE FROM " + TABELA +
-            "WHERE TELEFONE = ?", parametros);
+            "WHERE TELEFONE like %?%", parametros);
         int total = rawQuery.getCount();
         rawQuery.close();
 
