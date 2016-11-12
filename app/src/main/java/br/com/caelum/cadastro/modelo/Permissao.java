@@ -20,7 +20,8 @@ public class Permissao {
             Manifest.permission.RECEIVE_SMS,
             Manifest.permission.INTERNET,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_SMS};
+            Manifest.permission.READ_SMS,
+            Manifest.permission.INTERNET};
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             for (String permissao : permissoes) {

@@ -17,7 +17,7 @@ import br.com.caelum.cadastro.modelo.Aluno;
  */
 public class AlunoDao extends SQLiteOpenHelper {
 
-    private static final int VERSAO = 2;
+    private static final int VERSAO = 4;
     private static final String TABELA = "Alunos";
     public static final String SQL_DROP_TABLE_ALUNO = "DROP TABLE IF EXISTS " + TABELA;
     private static final String DATABASE = "CadastroCaelum";
@@ -25,7 +25,7 @@ public class AlunoDao extends SQLiteOpenHelper {
     public static final String SQL_CREATE_TABLE_ALUNO = "CREATE TABLE "+ TABELA
             + " ( id INTEGER PRIMARY KEY, "
             + "nome TEXT NOT NULL, telefone TEXT, "
-            + "endereco TEXT, site TEXT, nota REAL);";
+            + "endereco TEXT, site TEXT, nota REAL, caminhoFoto TEXTa);";
 
     public AlunoDao(Context context) {
         super(context, DATABASE, null, VERSAO);
@@ -106,7 +106,7 @@ public class AlunoDao extends SQLiteOpenHelper {
         String[] parametros = {telefone};
 
         Cursor rawQuery = getReadableDatabase().rawQuery("SELECT TELEFONE FROM " + TABELA +
-            "WHERE TELEFONE like %?%", parametros);
+            " WHERE TELEFONE like %?%", parametros);
         int total = rawQuery.getCount();
         rawQuery.close();
 

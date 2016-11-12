@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -21,8 +23,11 @@ import java.util.List;
 
 import br.com.caelum.cadastro.adapter.ListaAlunosAdapter;
 import br.com.caelum.cadastro.dao.AlunoDao;
+import br.com.caelum.cadastro.helper.AlunoConverter;
 import br.com.caelum.cadastro.modelo.Aluno;
 import br.com.caelum.cadastro.modelo.Permissao;
+import br.com.caelum.cadastro.support.WebClient;
+import br.com.caelum.cadastro.task.EnviaAlunosTask;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
@@ -206,4 +211,40 @@ public class ListaAlunosActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_lista_alunos, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        AlunoDao alunoDao = new AlunoDao(this);
+        try {
+            switch (item.getItemId()){
+                case R.id.menu_enviar_notas:
+                    /*List<Aluno> alunos = alunoDao.getAll();
+
+                    String json = new AlunoConverter().toJSON(alunos);
+                    WebClient client = new WebClient();
+                    String resposta = client.post(json);
+
+                    Toast.makeText(this, resposta, Toast.LENGTH_LONG).show();
+                    return true;*/
+
+                    new EnviaAlunosTask(this).execute();
+                    return true;
+                case R.id.menu_receber_provas:
+                    Intent provas = new Intent(this, ProvasActivity.class);
+                    startActivity(provas);
+                    return true;
+            }
+        } finally {
+            alunoDao.close();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
