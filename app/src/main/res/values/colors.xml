@@ -6,4 +6,5 @@
     <color name="colorYellowStars">#ffe30e</color>
     <color name="linha_par">#97CBE2</color>
     <color name="linha_impar">#76BDDD</color>
+    <color name="white">#FFFFFF</color>
 </resources>

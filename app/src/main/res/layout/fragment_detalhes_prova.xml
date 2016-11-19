@@ -22,6 +22,14 @@
                 android:textColor="#FFF"
                 android:textSize="22sp"/>
 
+            <TextView
+                android:id="@+id/detalhe_prova_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#FFF"/>
+
         </TableRow>
 
         <ListView

@@ -239,6 +239,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
                     Intent provas = new Intent(this, ProvasActivity.class);
                     startActivity(provas);
                     return true;
+                case R.id.menu_mapa:
+                    Intent mapas = new Intent(this, MostraAlunosActivity.class);
+                    startActivity(mapas);
+                    return true;
             }
         } finally {
             alunoDao.close();
